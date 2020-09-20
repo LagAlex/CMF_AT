@@ -15,7 +15,7 @@ class Simulator(object):
         self.environment = environment
         self.data_registry = DataRegistry(environment)
 
-    def simulate(self, alphas):
+    def simulate(self, alphas, with_costs=True):
         # Data dependencies
         self.data_registry.register_dependency('close')
         self.data_registry.register_dependency('open')
@@ -26,7 +26,7 @@ class Simulator(object):
         self.data_registry.load()
         # Start simulations
         for alpha in alphas:
-            self.__simulate_alpha(alpha)
+            self.__simulate_alpha(alpha, with_costs)
 
     def __simulate_alpha(self, alpha, with_costs=True):
         # PNL is calculated close-to-close
@@ -35,7 +35,9 @@ class Simulator(object):
         positions = np.zeros(len(self.environment.tickers))
         positions[np.logical_not(self.data_registry.get('is_valid')[0])] = np.nan
         new_positions = np.empty(len(self.environment.tickers))
-        pnl_data = np.empty((len(self.environment.dates), 6))
+        # PNL FORMAT:
+        # DATE DAILY_PNL HOLD_PNL1 TRADE_COST TRADE_PNL2 VOLUME_TRADED BOOKSIZE BET_NUMBER
+        pnl_data = np.empty((len(self.environment.dates), 8))
 
         for di in range(len(self.environment.dates)):
             print(self.environment.dates[di])
@@ -47,7 +49,12 @@ class Simulator(object):
 
                 alpha.generate_positions(di, self.data_registry, new_positions)
                 new_positions[np.logical_not(self.data_registry.get('is_valid')[di])] = np.nan # Cannot trade invalid stocks
+                if np.isnan(new_positions).all(): # Fake day
+                    pnl_data[di] = [self.environment.dates[di], 0, 0, 0, 0, 0, self.booksize, bet_number]
+                    continue
                 new_positions *= (self.booksize / np.nansum(np.abs(new_positions))) # Scale to booksize
+                bet_number = np.count_nonzero(new_positions) - np.count_nonzero(np.isnan(new_positions))
+                # TODO: sometimes trades are calculated incorrectly
                 trades = np.nan_to_num(new_positions) - np.nan_to_num(positions)
                 usd_volume_traded = np.abs(trades).sum()
                 if with_costs:
@@ -57,8 +64,8 @@ class Simulator(object):
                 positions = new_positions
                 holding_pnl2 = np.nansum((self.data_registry.get('close')[di] /  self.data_registry.get('open')[di] - 1) * positions)
                 total_pnl = holding_pnl1 - trade_cost + holding_pnl2
-                pnl_data[di] = [self.environment.dates[di], total_pnl, holding_pnl1, trade_cost, holding_pnl2, usd_volume_traded]
+                pnl_data[di] = [self.environment.dates[di], total_pnl, holding_pnl1, trade_cost, holding_pnl2, usd_volume_traded, self.booksize, bet_number]
             else:
-                pnl_data[di] = [self.environment.dates[di], 0.0, 0.0, 0.0, 0.0, 0.0]
+                pnl_data[di] = [self.environment.dates[di], 0.0, 0.0, 0.0, 0.0, 0.0, self.booksize, 0]
 
         np.savetxt("./%s.pnl" % alpha.name, pnl_data, delimiter=" ")
