@@ -1,5 +1,6 @@
 import yfinance as yf
 import numpy as np
+from scipy.ndimage.interpolation import shift
 
 
 def file_loader(path, name):
@@ -22,6 +23,12 @@ def is_usa_loader(data_registry):
 
     data_registry.loaded_data['is_usa'] = result
 
+def load_returns(data_registry):
+    data_registry.load_id('close')
+    data_registry.loaded_data['returns'] = np.diff(data_registry.get('close'), axis=0)[0] / data_registry.get('close')
+
+def load_filtered_returns(data_registry):
+    pass
 
 
 LOADERS = {
@@ -30,6 +37,8 @@ LOADERS = {
     'volume': file_loader('./data/Volume', 'volume'),
     'is_valid': is_valid_loader,
     'is_usa': is_usa_loader,
+    'returns': load_returns,
+    'filtered_returns': load_filtered_returns,
     }
 
 
