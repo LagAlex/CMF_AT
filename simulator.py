@@ -54,14 +54,13 @@ class Simulator(object):
                     continue
                 new_positions *= (self.booksize / np.nansum(np.abs(new_positions))) # Scale to booksize
                 bet_number = np.count_nonzero(new_positions) - np.count_nonzero(np.isnan(new_positions))
-                # TODO: sometimes trades are calculated incorrectly
                 trades = np.nan_to_num(new_positions) - np.nan_to_num(positions)
                 usd_volume_traded = np.abs(trades).sum()
                 if with_costs:
                     trade_cost = usd_volume_traded * 0.001
                 else:
                     trade_cost = 0
-                positions = new_positions
+                np.copyto(positions, new_positions)
                 holding_pnl2 = np.nansum((self.data_registry.get('close')[di] /  self.data_registry.get('open')[di] - 1) * positions)
                 total_pnl = holding_pnl1 - trade_cost + holding_pnl2
                 pnl_data[di] = [self.environment.dates[di], total_pnl, holding_pnl1, trade_cost, holding_pnl2, usd_volume_traded, self.booksize, bet_number]
