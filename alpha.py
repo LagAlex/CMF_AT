@@ -65,13 +65,13 @@ class RegularReturnStreakAlpha(Alpha):
         super(RegularReturnStreakAlpha, self).__init__(environment, name)
 
     def register_dependencies(self, data_registry):
-        data_registry.register_dependency('returns')
+        data_registry.register_dependency('close')
         data_registry.register_dependency('is_valid')
 
     def generate_positions(self, di, data_registry, positions):
         past_returns = list()
         for i in range(max(self.pos_streak, self.neg_streak)):
-            past_returns.append(data_registry.get('returns')[di - 1 - i])
+            past_returns.append(data_registry.get('close')[di - 1 - i] / data_registry.get('close')[di -i -2] - 1.)
             neutralize(past_returns[-1], data_registry.get('is_valid')[di - 1 - i])
 
         for ii in range(len(positions)):

@@ -1,0 +1,24 @@
+Right now the strategy does not beat the costs (even remotely) due to high turnover.
+To make it tradeable some decay is necessary.
+
+
+IS_SHARPE = -5.564925	OS_SHARPE=-5.639511	OSIS=1.013403
+IS_FULL {'CumPNL': -1948063.0186839495, 'Total_costs': 2319859.237078071, 'avgBet': 1380.4663440387153, 'minBet': 0.0, 'tradeDays': 2244, 'TotalReturn': -1.9480630186839494, 'Return': nan, 'Sharpe': -5.56492520355249}
+OS_FULL {'CumPNL': -223847.41859793334, 'Total_costs': 261176.83576577684, 'avgBet': 1663.0197628458498, 'minBet': 1630.0, 'tradeDays': 250, 'TotalReturn': -0.22384741859793333, 'Return': -0.2254192794986375, 'Sharpe': -5.639511140650718}
+{'CumPNL': -2251556.384590787, 'Total_costs': 2770929.314464959, 'avgBet': 1428.9102658788775, 'minBet': 0.0, 'tradeDays': 2675, 'TotalReturn': -2.2515563845907867, 'Return': nan, 'Sharpe': -3.908520859457674}
+Alpha RegularStreakBC: 
+IS_SHARPE = 1.063589	OS_SHARPE=0.941365	OSIS=0.885084
+IS_FULL {'CumPNL': 371796.2183941191, 'Total_costs': 0.0, 'avgBet': 1380.4663440387153, 'minBet': 0.0, 'tradeDays': 2244, 'TotalReturn': 0.37179621839411914, 'Return': 0.03613787406983571, 'Sharpe': 1.0635885783522139}
+OS_FULL {'CumPNL': 37329.41716784342, 'Total_costs': 0.0, 'avgBet': 1663.0197628458498, 'minBet': 1630.0, 'tradeDays': 250, 'TotalReturn': 0.03732941716784342, 'Return': 0.03763360294654272, 'Sharpe': 0.941364998599094}
+{'CumPNL': 519372.92987417284, 'Total_costs': 0.0, 'avgBet': 1428.9102658788775, 'minBet': 0.0, 'tradeDays': 2675, 'TotalReturn': 0.5193729298741728, 'Return': 0.04019270501673944, 'Sharpe': 0.9030032788629577}
+Alpha RegularStreak3: 
+IS_SHARPE = -4.588793	OS_SHARPE=-4.820234	OSIS=1.050436
+IS_FULL {'CumPNL': -1848647.5484351087, 'Total_costs': 2330674.610540016, 'avgBet': 1374.409590849098, 'minBet': 0.0, 'tradeDays': 2243, 'TotalReturn': -1.8486475484351088, 'Return': nan, 'Sharpe': -4.588793268088942}
+OS_FULL {'CumPNL': -235210.05074563617, 'Total_costs': 264836.6338426308, 'avgBet': 1648.1660079051383, 'minBet': 378.0, 'tradeDays': 250, 'TotalReturn': -0.23521005074563617, 'Return': -0.23684894444650384, 'Sharpe': -4.820234187019213}
+{'CumPNL': -1986622.388318153, 'Total_costs': 2785897.5275523476, 'avgBet': 1421.4121122599704, 'minBet': 0.0, 'tradeDays': 2674, 'TotalReturn': -1.986622388318153, 'Return': nan, 'Sharpe': -2.660052190381236}
+Alpha RegularStreak3BC: 
+IS_SHARPE = 1.196934	OS_SHARPE=0.611405	OSIS=0.510809
+IS_FULL {'CumPNL': 482027.06210490904, 'Total_costs': 0.0, 'avgBet': 1374.409590849098, 'minBet': 0.0, 'tradeDays': 2243, 'TotalReturn': 0.48202706210490903, 'Return': 0.045190868249860294, 'Sharpe': 1.1969339584830436}
+OS_FULL {'CumPNL': 29626.583096994524, 'Total_costs': 0.0, 'avgBet': 1648.1660079051383, 'minBet': 378.0, 'tradeDays': 250, 'TotalReturn': 0.029626583096994525, 'Return': 0.029867100619463738, 'Sharpe': 0.611404511255619}
+{'CumPNL': 799275.1392341946, 'Total_costs': 0.0, 'avgBet': 1421.4121122599704, 'minBet': 0.0, 'tradeDays': 2674, 'TotalReturn': 0.7992751392341947, 'Return': 0.05691633365439319, 'Sharpe': 1.0695893234062113}
+
